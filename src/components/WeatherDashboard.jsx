@@ -110,47 +110,46 @@ const WeatherDashboard = () => {
 
   const getBackgroundGradient = (weatherMain, iconCode) => {
     const baseClasses = 'min-h-screen bg-gradient-to-br transition-all duration-1000';
-    const textClasses = 'text-white';
 
     switch (weatherMain?.toLowerCase()) {
       case 'clear':
-        return `${baseClasses} from-blue-400 via-blue-500 to-yellow-400 ${textClasses}`;
+        return `${baseClasses} from-blue-400 via-blue-500 to-yellow-400`;
       
       case 'clouds':
         // Different gradients for different cloud conditions
         switch (iconCode) {
           case '02d': // Few clouds
-            return `${baseClasses} from-blue-300 via-blue-400 to-gray-400 ${textClasses}`;
+            return `${baseClasses} from-blue-300 via-blue-400 to-gray-400`;
           case '03d': // Scattered clouds
-            return `${baseClasses} from-gray-300 via-gray-400 to-gray-500 ${textClasses}`;
+            return `${baseClasses} from-gray-300 via-gray-400 to-gray-500`;
           case '04d': // Broken clouds
-            return `${baseClasses} from-gray-400 via-gray-500 to-gray-600 ${textClasses}`;
+            return `${baseClasses} from-gray-400 via-gray-500 to-gray-600`;
           default:
-            return `${baseClasses} from-gray-400 via-gray-500 to-gray-600 ${textClasses}`;
+            return `${baseClasses} from-gray-400 via-gray-500 to-gray-600`;
         }
       
       case 'rain':
         // Different gradients for different rain conditions
         switch (iconCode) {
           case '09d': // Shower rain
-            return `${baseClasses} from-gray-500 via-blue-500 to-blue-700 ${textClasses}`;
+            return `${baseClasses} from-gray-500 via-blue-500 to-blue-700`;
           case '10d': // Rain
-            return `${baseClasses} from-gray-600 via-blue-600 to-blue-800 ${textClasses}`;
+            return `${baseClasses} from-gray-600 via-blue-600 to-blue-800`;
           default:
-            return `${baseClasses} from-gray-600 via-blue-600 to-blue-800 ${textClasses}`;
+            return `${baseClasses} from-gray-600 via-blue-600 to-blue-800`;
         }
       
       case 'thunderstorm':
-        return `${baseClasses} from-gray-800 via-purple-700 to-gray-900 ${textClasses}`;
+        return `${baseClasses} from-gray-800 via-purple-700 to-gray-900`;
       
       case 'snow':
-        return `${baseClasses} from-blue-600 via-blue-400 to-blue-300 ${textClasses}`;
+        return `${baseClasses} from-blue-600 via-blue-400 to-blue-300`;
       
       case 'mist':
-        return `${baseClasses} from-gray-300 via-gray-400 to-gray-500 ${textClasses}`;
+        return `${baseClasses} from-gray-300 via-gray-400 to-gray-500`;
       
       default:
-        return `${baseClasses} from-blue-400 via-blue-500 to-purple-600 ${textClasses}`;
+        return `${baseClasses} from-gray-300 via-gray-400 to-gray-500`;
     }
   };
 
@@ -264,16 +263,16 @@ const WeatherDashboard = () => {
 
   return (
     <div className={backgroundClasses}>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto h-screen flex flex-col justify-center p-4 text-white">
         {/* Header */}
-        <div className="text-center mb-8">
+        {/* <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-2 drop-shadow-lg">
             Weather Dashboard
           </h1>
           <p className="text-lg opacity-80">
             Stay updated with real-time weather information
           </p>
-        </div>
+        </div> */}
 
         {/* Search Section */}
         <SearchBar

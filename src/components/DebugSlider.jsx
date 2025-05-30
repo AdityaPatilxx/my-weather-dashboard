@@ -31,9 +31,16 @@ const DebugSlider = ({ onWeatherChange, currentTemp }) => {
   };
 
   return (
-    <div className="fixed bottom-4 right-0 flex items-center">
+    <div className="fixed bottom-5 right-0 flex flex-col items-end gap-2">
       {/* Debug Panel */}
-      <div className={`bg-black/50 backdrop-blur-md p-4 rounded-l-xl text-white transition-all duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="bg-black/50 backdrop-blur-md p-2 rounded-l-lg text-white hover:bg-black/60 transition-colors"
+      >
+        {isOpen ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+      </button>
+      <div className={`bg-black/50 backdrop-blur-md p-4 rounded-l-xl text-white transition-all duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-50'}`}>
+      
         <h3 className="text-sm font-medium mb-2">Debug Controls</h3>
         <div className="space-y-4">
           <div>
@@ -65,12 +72,7 @@ const DebugSlider = ({ onWeatherChange, currentTemp }) => {
       </div>
 
       {/* Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="bg-black/50 backdrop-blur-md p-2 rounded-l-lg text-white hover:bg-black/60 transition-colors"
-      >
-        {isOpen ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-      </button>
+      
     </div>
   );
 };
