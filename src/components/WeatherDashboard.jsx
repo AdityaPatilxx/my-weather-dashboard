@@ -1,5 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Cloud, CloudRain, CloudSnow, Zap, CloudDrizzle } from 'lucide-react';
+import { 
+  Sun, 
+  Cloud, 
+  CloudRain, 
+  CloudSnow, 
+  Zap, 
+  CloudDrizzle,
+  CloudFog,
+  CloudLightning,
+  CloudRainWind,
+  Snowflake,
+  Wind,
+  CloudSun,
+  CloudMoon,
+  Moon
+} from 'lucide-react';
 import '../index.css';
 
 import SearchBar from './SearchBar';
@@ -12,10 +27,9 @@ import DebugSlider from './DebugSlider';
 const WeatherDashboard = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentLocation, setCurrentLocation] = useState('');
-  const [debugWeather, setDebugWeather] = useState(null);
 
   // OpenWeatherMap API configuration
   const API_KEY = '6a9d21b2c123c7e39f3126e775f7fda8';
@@ -46,68 +60,136 @@ const WeatherDashboard = () => {
   };
   */
 
-  const getWeatherIcon = (weatherMain) => {
+  const getWeatherIcon = (weatherMain, iconCode) => {
+    const baseIconClass = "w-16 h-16";
+    
+    // Map weather condition codes to icons
     switch (weatherMain?.toLowerCase()) {
+      // Clear sky
       case 'clear':
-        return <Sun className="w-16 h-16 text-yellow-400" />;
+        return <Sun className={`${baseIconClass} text-yellow-400`} />;
+
+      // Clouds
       case 'clouds':
-        return <Cloud className="w-16 h-16 text-gray-400" />;
+        if (iconCode === '02d') return <CloudSun className={`${baseIconClass} text-gray-400`} />;
+        if (iconCode === '03d') return <Cloud className={`${baseIconClass} text-gray-400`} />;
+        if (iconCode === '04d') return <Cloud className={`${baseIconClass} text-gray-500`} />;
+        return <Cloud className={`${baseIconClass} text-gray-400`} />;
+
+      // Rain
       case 'rain':
-        return <CloudRain className="w-16 h-16 text-blue-400" />;
-      case 'drizzle':
-        return <CloudDrizzle className="w-16 h-16 text-blue-300" />;
+        if (iconCode === '09d') return <CloudRainWind className={`${baseIconClass} text-blue-400`} />;
+        if (iconCode === '10d') return <CloudRain className={`${baseIconClass} text-blue-400`} />;
+        return <CloudRain className={`${baseIconClass} text-blue-400`} />;
+
+      // Thunderstorm
       case 'thunderstorm':
-        return <Zap className="w-16 h-16 text-purple-400" />;
+        return <CloudLightning className={`${baseIconClass} text-purple-400`} />;
+
+      // Snow
       case 'snow':
-        return <CloudSnow className="w-16 h-16 text-blue-300" />;
+        return <Snowflake className={`${baseIconClass} text-blue-300`} />;
+
+      // Atmosphere (Mist, Smoke, Haze, Dust, Fog, Sand, Ash, Squall, Tornado)
       case 'mist':
-      case 'fog':
+      case 'smoke':
       case 'haze':
-        return <Cloud className="w-16 h-16 text-gray-300" />;
+      case 'dust':
+      case 'fog':
+      case 'sand':
+      case 'ash':
+      case 'squall':
+      case 'tornado':
+        return <CloudFog className={`${baseIconClass} text-gray-300`} />;
+
+      // Default
       default:
-        return <Sun className="w-16 h-16 text-yellow-400" />;
+        return <Sun className={`${baseIconClass} text-yellow-400`} />;
     }
   };
 
-  const getBackgroundGradient = (weatherMain) => {
+  const getBackgroundGradient = (weatherMain, iconCode) => {
     const baseClasses = 'min-h-screen bg-gradient-to-br transition-all duration-1000';
-    const textClasses = weatherMain?.toLowerCase() === 'snow' ? 'text-gray-800' : 'text-white';
+    const textClasses = 'text-white';
 
     switch (weatherMain?.toLowerCase()) {
       case 'clear':
         return `${baseClasses} from-blue-400 via-blue-500 to-yellow-400 ${textClasses}`;
+      
       case 'clouds':
-        return `${baseClasses} from-gray-400 via-gray-500 to-gray-600 ${textClasses}`;
+        // Different gradients for different cloud conditions
+        switch (iconCode) {
+          case '02d': // Few clouds
+            return `${baseClasses} from-blue-300 via-blue-400 to-gray-400 ${textClasses}`;
+          case '03d': // Scattered clouds
+            return `${baseClasses} from-gray-300 via-gray-400 to-gray-500 ${textClasses}`;
+          case '04d': // Broken clouds
+            return `${baseClasses} from-gray-400 via-gray-500 to-gray-600 ${textClasses}`;
+          default:
+            return `${baseClasses} from-gray-400 via-gray-500 to-gray-600 ${textClasses}`;
+        }
+      
       case 'rain':
-      case 'drizzle':
-        return `${baseClasses} from-gray-600 via-blue-600 to-blue-800 ${textClasses}`;
+        // Different gradients for different rain conditions
+        switch (iconCode) {
+          case '09d': // Shower rain
+            return `${baseClasses} from-gray-500 via-blue-500 to-blue-700 ${textClasses}`;
+          case '10d': // Rain
+            return `${baseClasses} from-gray-600 via-blue-600 to-blue-800 ${textClasses}`;
+          default:
+            return `${baseClasses} from-gray-600 via-blue-600 to-blue-800 ${textClasses}`;
+        }
+      
       case 'thunderstorm':
         return `${baseClasses} from-gray-800 via-purple-700 to-gray-900 ${textClasses}`;
+      
       case 'snow':
-        return `${baseClasses} from-blue-200 via-white to-gray-300 ${textClasses}`;
+        return `${baseClasses} from-blue-600 via-blue-400 to-blue-300 ${textClasses}`;
+      
       case 'mist':
         return `${baseClasses} from-gray-300 via-gray-400 to-gray-500 ${textClasses}`;
-      case 'fog':
-        return `${baseClasses} from-gray-400 via-gray-500 to-gray-600 ${textClasses}`;
-      case 'haze':
-        return `${baseClasses} from-gray-500 via-gray-600 to-gray-700 ${textClasses}`;
+      
       default:
         return `${baseClasses} from-blue-400 via-blue-500 to-purple-600 ${textClasses}`;
     }
   };
 
-  const handleDebugWeatherChange = (condition) => {
-    if (!weatherData) return;
+  const handleDebugWeatherChange = (condition, temperature) => {
+    if (!condition) return;
     
-    const debugData = {
-      ...weatherData,
+    const mockData = {
+      main: {
+        temp: temperature,
+        feels_like: temperature - 2,
+        humidity: 65,
+        pressure: 1013,
+        temp_min: temperature - 3,
+        temp_max: temperature + 3
+      },
       weather: [{
-        main: condition,
-        description: condition,
-        icon: '01d'
-      }]
+        id: parseInt(condition.code.slice(0, 2)),
+        main: condition.main,
+        description: condition.description,
+        icon: condition.code
+      }],
+      wind: {
+        speed: 5.2,
+        deg: 180
+      },
+      clouds: {
+        all: condition.main === 'Clouds' ? 75 : 20
+      },
+      sys: {
+        country: 'US',
+        sunrise: Date.now(),
+        sunset: Date.now() + 43200000
+      },
+      name: 'Debug City',
+      visibility: 10000
     };
-    setDebugWeather(debugData);
+
+    setWeatherData(mockData);
+    setError(null);
   };
 
   const fetchWeatherData = async (city) => {
@@ -115,7 +197,6 @@ const WeatherDashboard = () => {
     
     setLoading(true);
     setError('');
-    setDebugWeather(null);
     
     try {
       const response = await fetch(`${BASE_URL}?q=${city}&appid=${API_KEY}&units=metric`);
@@ -144,7 +225,6 @@ const WeatherDashboard = () => {
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
       setLoading(true);
-      setDebugWeather(null);
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           try {
@@ -178,9 +258,9 @@ const WeatherDashboard = () => {
     fetchWeatherData('Mumbai');
   }, []);
 
-  const displayData = debugWeather || weatherData;
+  const displayData = weatherData;
   const weatherMain = displayData?.weather[0]?.main;
-  const backgroundClasses = getBackgroundGradient(weatherMain);
+  const backgroundClasses = getBackgroundGradient(weatherMain, displayData?.weather[0]?.icon);
 
   return (
     <div className={backgroundClasses}>
@@ -230,8 +310,11 @@ const WeatherDashboard = () => {
         </div>
 
         {/* Debug Controls */}
-        {weatherData && !loading && (
-          <DebugSlider onWeatherChange={handleDebugWeatherChange} />
+        {displayData && !loading && (
+          <DebugSlider 
+            onWeatherChange={handleDebugWeatherChange}
+            currentTemp={displayData?.main?.temp}
+          />
         )}
       </div>
     </div>
