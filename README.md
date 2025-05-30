@@ -1,12 +1,75 @@
-# React + Vite
+# Weather Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal project built to enhance my React and Tailwind CSS skills. This weather dashboard application serves as a practical learning ground for modern web development techniques and best practices.
 
-Currently, two official plugins are available:
+## 🎯 Learning Goals
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project was created with the following learning objectives:
 
-## Expanding the ESLint configuration
+- **React Fundamentals**
+  - Component composition and reusability
+  - State management
+  - React hooks (useState, useEffect)
+  - Event handling
+  - Props drilling and component communication
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Tailwind CSS**
+  - Utility-first CSS approach
+  - Responsive design implementation
+  - Custom component styling
+  - Dark/light mode theming
+  - CSS animations and transitions
+
+- **Modern Development Practices**
+  - Vite as a build tool
+  - ESLint for code quality
+  - Git version control
+  - Component-based architecture
+  - API integration
+
+## 🚀 Technologies Used
+
+- React 19
+- Tailwind CSS 4
+- Vite
+- Lucide React (for icons)
+- ESLint
+
+## 🛠️ Project Setup
+
+1. Clone the repository
+```bash
+git clone [repository-url]
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Start the development server
+```bash
+npm run dev
+```
+
+4. Build for production
+```bash
+npm run build
+```
+
+## 📝 Key Learnings
+
+- Understanding the importance of component reusability in React
+- Mastering Tailwind's utility classes for rapid UI development
+- Implementing responsive design patterns
+- Working with modern React features and hooks
+- Best practices for project structure and organization
+
+## 🔮 Future Improvements
+
+- Add TypeScript for better type safety
+- Implement state management with Redux or Context API
+- Add unit tests with Jest and React Testing Library
+- Enhance accessibility features
+- Add more weather-related features and visualizations
+
